@@ -7,7 +7,6 @@ import {
     parseLocalDateTime,
     isDateValid,
     postEvent,
-    DRESSCODE_OPTIONS,
 } from '../services/eventService';
 
 const EventForm = () => {
@@ -42,8 +41,8 @@ const EventForm = () => {
             newErrors.lokasi = 'Lokasi/alamat wajib diisi';
         }
 
-        if (!formData.dresscode) {
-            newErrors.dresscode = 'Dresscode wajib dipilih';
+        if (!formData.dresscode.trim()) {
+            newErrors.dresscode = 'Dresscode wajib diisi';
         }
 
         setErrors(newErrors);
@@ -220,23 +219,18 @@ const EventForm = () => {
                         <Shirt className="w-4 h-4" />
                         Dresscode <span className="text-danger-500">*</span>
                     </label>
-                    <select
+                    <input
+                        type="text"
                         id="dresscode"
                         name="dresscode"
                         value={formData.dresscode}
                         onChange={handleChange}
+                        placeholder="Contoh: Formal, Casual, Batik"
                         className={`w-full px-4 py-3 rounded-xl bg-white dark:bg-dark-800 border 
               ${errors.dresscode ? 'border-danger-500' : 'border-dark-200 dark:border-dark-600'} 
-              text-dark-800 dark:text-dark-100
-              input-focus focus:border-primary-500 cursor-pointer`}
-                    >
-                        <option value="">Pilih dresscode</option>
-                        {DRESSCODE_OPTIONS.map((option) => (
-                            <option key={option.value} value={option.value}>
-                                {option.label}
-                            </option>
-                        ))}
-                    </select>
+              text-dark-800 dark:text-dark-100 placeholder-dark-400 dark:placeholder-dark-500
+              input-focus focus:border-primary-500`}
+                    />
                     {errors.dresscode && (
                         <p className="mt-1 text-sm text-danger-500">{errors.dresscode}</p>
                     )}
