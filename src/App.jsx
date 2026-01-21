@@ -1,7 +1,7 @@
 import { Toaster } from 'react-hot-toast';
 import { ThemeProvider } from './context/ThemeContext';
 import { EventProvider } from './context/EventContext';
-import { Header, EventForm, EventList, EventModal } from './components';
+import { Header, EventForm, EventList, EventModal, EventWidgets } from './components';
 
 function App() {
   return (
@@ -52,6 +52,7 @@ function App() {
 
               {/* List Section */}
               <div className="xl:col-span-8">
+                <EventWidgets />
                 <EventList />
               </div>
             </div>

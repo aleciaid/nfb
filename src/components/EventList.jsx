@@ -133,6 +133,36 @@ const EventList = () => {
         return waktu;
     };
 
+    // Get event date badge (Hari Ini / Soon)
+    const getEventDateBadge = (tanggal) => {
+        if (!tanggal) return null;
+
+        const today = new Date();
+        today.setHours(0, 0, 0, 0);
+
+        const tomorrow = new Date(today);
+        tomorrow.setDate(tomorrow.getDate() + 1);
+
+        const eventDate = new Date(tanggal);
+        eventDate.setHours(0, 0, 0, 0);
+
+        if (eventDate.getTime() === today.getTime()) {
+            return {
+                text: 'Hari Ini',
+                className: 'bg-gradient-to-r from-rose-500 to-pink-500 text-white shadow-lg shadow-rose-500/30 animate-pulse'
+            };
+        }
+
+        if (eventDate.getTime() === tomorrow.getTime()) {
+            return {
+                text: 'Soon',
+                className: 'bg-gradient-to-r from-amber-500 to-orange-500 text-white shadow-lg shadow-amber-500/30'
+            };
+        }
+
+        return null;
+    };
+
     return (
         <div className="glass rounded-2xl shadow-xl border border-dark-200 dark:border-dark-700 overflow-hidden">
             {/* Header */}
@@ -299,9 +329,16 @@ const EventList = () => {
                                             </code>
                                         </td>
                                         <td className="px-6 py-4">
-                                            <p className="font-medium text-dark-800 dark:text-dark-100">
-                                                {event.namaAcara}
-                                            </p>
+                                            <div className="flex items-center gap-2 flex-wrap">
+                                                <p className="font-medium text-dark-800 dark:text-dark-100">
+                                                    {event.namaAcara}
+                                                </p>
+                                                {getEventDateBadge(event.tanggal) && (
+                                                    <span className={`inline-flex px-2.5 py-0.5 rounded-full text-xs font-bold uppercase tracking-wide ${getEventDateBadge(event.tanggal).className}`}>
+                                                        {getEventDateBadge(event.tanggal).text}
+                                                    </span>
+                                                )}
+                                            </div>
                                         </td>
                                         <td className="px-6 py-4">
                                             <div className="space-y-1">
@@ -357,9 +394,16 @@ const EventList = () => {
                                 >
                                     <div className="flex items-start justify-between mb-3">
                                         <div>
-                                            <h3 className="font-semibold text-dark-800 dark:text-dark-100 mb-1">
-                                                {event.namaAcara}
-                                            </h3>
+                                            <div className="flex items-center gap-2 flex-wrap mb-1">
+                                                <h3 className="font-semibold text-dark-800 dark:text-dark-100">
+                                                    {event.namaAcara}
+                                                </h3>
+                                                {getEventDateBadge(event.tanggal) && (
+                                                    <span className={`inline-flex px-2 py-0.5 rounded-full text-xs font-bold uppercase tracking-wide ${getEventDateBadge(event.tanggal).className}`}>
+                                                        {getEventDateBadge(event.tanggal).text}
+                                                    </span>
+                                                )}
+                                            </div>
                                             <code className="px-2 py-0.5 bg-dark-100 dark:bg-dark-800 rounded text-xs font-mono text-dark-500">
                                                 #{event.id}
                                             </code>
