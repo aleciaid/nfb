@@ -14,6 +14,7 @@ export const EventProvider = ({ children }) => {
     const [selectedEvent, setSelectedEvent] = useState(null);
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [isEditMode, setIsEditMode] = useState(false);
+    const [isFormModalOpen, setIsFormModalOpen] = useState(false);
     const [lastSyncInfo, setLastSyncInfo] = useState(null);
 
     const itemsPerPage = 10;
@@ -103,6 +104,15 @@ export const EventProvider = ({ children }) => {
         setIsEditMode(false);
     }, []);
 
+    // Form modal handlers
+    const openFormModal = useCallback(() => {
+        setIsFormModalOpen(true);
+    }, []);
+
+    const closeFormModal = useCallback(() => {
+        setIsFormModalOpen(false);
+    }, []);
+
     const value = {
         events,
         setEvents,
@@ -120,6 +130,7 @@ export const EventProvider = ({ children }) => {
         selectedEvent,
         isModalOpen,
         isEditMode,
+        isFormModalOpen,
         lastSyncInfo,
         setLastSyncInfo,
         addEvent,
@@ -132,6 +143,8 @@ export const EventProvider = ({ children }) => {
         openDetailModal,
         openEditModal,
         closeModal,
+        openFormModal,
+        closeFormModal,
     };
 
     return (

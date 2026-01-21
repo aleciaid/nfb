@@ -9,7 +9,7 @@ import {
     postEvent,
 } from '../services/eventService';
 
-const EventForm = () => {
+const EventForm = ({ onSuccess }) => {
     const { addEvent } = useEvent();
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [formData, setFormData] = useState({
@@ -104,6 +104,7 @@ const EventForm = () => {
             addEvent(eventData);
             toast.success('Acara berhasil ditambahkan!');
             resetForm();
+            if (onSuccess) onSuccess();
         } catch (error) {
             console.error('Error submitting event:', error);
             toast.error(`Gagal menambahkan acara: ${error.message}`);
@@ -121,7 +122,7 @@ const EventForm = () => {
     };
 
     return (
-        <div className="glass rounded-2xl p-6 md:p-8 shadow-xl border border-dark-200 dark:border-dark-700">
+        <div>
             <div className="mb-6">
                 <h2 className="text-2xl font-bold text-dark-800 dark:text-dark-50 mb-2">
                     Tambah Acara Baru

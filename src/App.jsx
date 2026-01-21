@@ -1,7 +1,46 @@
 import { Toaster } from 'react-hot-toast';
+import { Plus } from 'lucide-react';
 import { ThemeProvider } from './context/ThemeContext';
-import { EventProvider } from './context/EventContext';
-import { Header, EventForm, EventList, EventModal, EventWidgets } from './components';
+import { EventProvider, useEvent } from './context/EventContext';
+import { Header, EventList, EventModal, EventWidgets, EventFormModal } from './components';
+
+// Separate component to use useEvent hook
+const MainContent = () => {
+  const { openFormModal } = useEvent();
+
+  return (
+    <>
+      {/* Main Content - Full Width */}
+      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 md:py-12">
+        {/* Widgets */}
+        <EventWidgets />
+
+        {/* Event List */}
+        <EventList />
+      </main>
+
+      {/* Floating Add Button */}
+      <button
+        onClick={openFormModal}
+        className="fixed bottom-6 right-6 z-40 flex items-center gap-2 py-3 px-5
+          bg-gradient-to-r from-primary-500 to-primary-600 
+          hover:from-primary-600 hover:to-primary-700
+          text-white font-semibold rounded-full shadow-2xl shadow-primary-500/40
+          hover:scale-105 active:scale-100 transition-all duration-200
+          group"
+      >
+        <Plus className="w-5 h-5 group-hover:rotate-90 transition-transform duration-300" />
+        <span className="hidden sm:inline">Tambah Acara</span>
+      </button>
+
+      {/* Form Modal */}
+      <EventFormModal />
+
+      {/* Detail Modal */}
+      <EventModal />
+    </>
+  );
+};
 
 function App() {
   return (
@@ -40,23 +79,8 @@ function App() {
           {/* Header */}
           <Header />
 
-          {/* Main Content */}
-          <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 md:py-12">
-            <div className="grid grid-cols-1 xl:grid-cols-12 gap-8">
-              {/* Form Section */}
-              <div className="xl:col-span-4">
-                <div className="xl:sticky xl:top-28">
-                  <EventForm />
-                </div>
-              </div>
-
-              {/* List Section */}
-              <div className="xl:col-span-8">
-                <EventWidgets />
-                <EventList />
-              </div>
-            </div>
-          </main>
+          {/* Main Content with EventProvider context */}
+          <MainContent />
 
           {/* Footer */}
           <footer className="py-8 border-t border-dark-200 dark:border-dark-800">
@@ -71,9 +95,6 @@ function App() {
               </div>
             </div>
           </footer>
-
-          {/* Modal */}
-          <EventModal />
         </div>
       </EventProvider>
     </ThemeProvider>
