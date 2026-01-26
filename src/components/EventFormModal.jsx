@@ -1,11 +1,14 @@
 import { X } from 'lucide-react';
 import { useEvent } from '../context/EventContext';
+import { useAuth } from '../context/AuthContext';
 import EventForm from './EventForm';
 
 const EventFormModal = () => {
     const { isFormModalOpen, closeFormModal } = useEvent();
+    const { isAuthenticated } = useAuth();
 
-    if (!isFormModalOpen) return null;
+    // SECURITY: Only render modal if user is authenticated AND modal is open
+    if (!isFormModalOpen || !isAuthenticated) return null;
 
     return (
         <div
@@ -39,3 +42,4 @@ const EventFormModal = () => {
 };
 
 export default EventFormModal;
+

@@ -1,5 +1,6 @@
 import { Moon, Sun, Calendar } from 'lucide-react';
 import { useTheme } from '../context/ThemeContext';
+import SessionIndicator from './SessionIndicator';
 
 const Header = () => {
     const { isDark, toggleTheme } = useTheme();
@@ -27,6 +28,9 @@ const Header = () => {
 
                     {/* Actions */}
                     <div className="flex items-center gap-3">
+                        {/* Session Indicator */}
+                        <SessionIndicator />
+
                         {/* Theme Toggle */}
                         <button
                             onClick={toggleTheme}
